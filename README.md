@@ -1,20 +1,14 @@
-<p style="text-align: center;">
+<p align = "center">
   <img width="50%" src="./screenshot.png"  alt="douban-box-go"/>
 </p>
-<h2 style="text-align: center;">Douban Box Go</h2>
-<p style="text-align: center;">同步豆瓣的 RSS 订阅到 Gist </p>
+<h2 align = "center">Douban Box Go</h2>
+<p align = "center">同步豆瓣的 RSS 订阅到 Gist </p>
 
 --- 
 
 > 📌✨ 更多像这样的 Pinned Gist 项目请访问：https://github.com/matchai/awesome-pinned-gists
 
-## 运行
-
-``` shell
-$ go run cmd/main.go
-```
-
-## 使用
+## 准备工作
 
 ### 1. 创建 Gist 并获取 Gist ID
 
@@ -34,7 +28,15 @@ Token
 - 点击右上角 xxx的账号 - 个人主页
 - 跳转到新页面的 URL 应该类似 `https://www.douban.com/people/157489011/` ， 其中 `157489011` 是我的豆瓣ID，记录下你自己的
 
-### 4. 通过 GitHub Actions 自动更新 Gist
+## 使用方法
+
+### 1. 手动执行
+
+``` shell
+$ go run cmd/main.go
+```
+
+### 2. 通过 GitHub Actions 自动更新 Gist
 
 - Fork 本项目并启用 GitHub
   Actions，根据个人需求可修改定时任务的执行时间，参考 [.github/workflows/schedule.yml](https://github.com/NERVEbing/douban-box-go/blob/master/.github/workflows/schedule.yml)
@@ -44,6 +46,6 @@ Token
 
 - 第一次需手动执行，之后每次 `push` 或者每日 `00:15 (Asia/Shanghai)` 时会自动更新 Gist
 
-## License
+## 开源协议
 
-[APACHE LICENSE, VERSION 2.0](https://github.com/NERVEbing/douban-box-go/blob/master/LICENSE)
+[Apache License 2.0](https://github.com/NERVEbing/douban-box-go/blob/master/LICENSE)
