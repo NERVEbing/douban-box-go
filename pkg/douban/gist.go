@@ -9,7 +9,10 @@ import (
 	"github.com/mattn/go-runewidth"
 )
 
-const MaxLineWidth = 40
+const (
+	MaxLines     = 5
+	MaxLineWidth = 40
+)
 
 type gist struct {
 	github    *github.Client

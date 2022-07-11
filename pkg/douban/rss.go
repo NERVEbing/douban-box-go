@@ -31,7 +31,10 @@ func getRSSDouBan(dbUserID string) (*rssDouBan, error) {
 
 	gist.Title = formatRSSTitle(feed.Title)
 
-	for _, item := range feed.Items {
+	for index, item := range feed.Items {
+		if index >= MaxLines {
+			break
+		}
 		gistItem := &rssDouBanItem{
 			Title:   formatRSSItemTitle(item.Title),
 			PubDate: formatRSSItemDate(item.PublishedParsed),
