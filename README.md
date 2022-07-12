@@ -1,5 +1,5 @@
 <p align = "center">
-  <img width="50%" src="./screenshot.png"  alt="douban-box-go"/>
+  <img width="400" src="./screenshot.png"  alt="douban-box-go"/>
 </p>
 <h2 align = "center">Douban Box Go</h2>
 <p align = "center">同步豆瓣的 RSS 订阅到 Gist </p>

@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	MaxLines     = 5
 	MaxLineWidth = 40
 )
 
@@ -82,29 +81,15 @@ func (g *gist) getGitHubGistFile(ghGist *github.Gist) github.GistFile {
 
 func (g *gist) formatRSSDouBanToGitHubGistContent() string {
 	content := ""
-	spacesLen := 6
-
-	max := g.getRSSDouBanItemsTitleMaxWidth()
-	if max < MaxLineWidth {
-		spacesLen = MaxLineWidth - max
-	}
 
 	for _, item := range g.rssDouBan.Items {
-		spaces := strings.Repeat(" ", spacesLen)
-		line := fmt.Sprintf("%s%s%s\n", item.PubDate, spaces, item.Title)
+		lineWidth := runewidth.StringWidth(item.Stars + item.Title)
+		if lineWidth > MaxLineWidth {
+			continue
+		}
+		line := fmt.Sprintf("%s   %s   %s\n", item.PubDate, item.Stars, item.Title)
 		content += line
 	}
 
 	return content
-}
-
-func (g *gist) getRSSDouBanItemsTitleMaxWidth() int {
-	max := 0
-	for _, item := range g.rssDouBan.Items {
-		if max < runewidth.StringWidth(item.Title) {
-			max = runewidth.StringWidth(item.Title)
-		}
-	}
-
-	return max
 }

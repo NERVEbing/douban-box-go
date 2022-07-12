@@ -16,9 +16,12 @@ type rssDouBan struct {
 type rssDouBanItem struct {
 	Title   string
 	PubDate string
+	Stars   string
 }
 
-const CSTLayout = "2006.01.02"
+const (
+	CSTLayout = "2006.01.02"
+)
 
 func getRSSDouBan(dbUserID string) (*rssDouBan, error) {
 	gist := &rssDouBan{}
@@ -31,15 +34,12 @@ func getRSSDouBan(dbUserID string) (*rssDouBan, error) {
 
 	gist.Title = formatRSSTitle(feed.Title)
 
-	for index, item := range feed.Items {
-		if index >= MaxLines {
-			break
-		}
+	for _, item := range feed.Items {
 		gistItem := &rssDouBanItem{
 			Title:   formatRSSItemTitle(item.Title),
 			PubDate: formatRSSItemDate(item.PublishedParsed),
+			Stars:   formatRSSItemStars(item.Description),
 		}
-
 		gist.Items = append(gist.Items, gistItem)
 	}
 
@@ -82,4 +82,28 @@ func formatRSSItemTitle(s string) string {
 
 func formatRSSItemDate(t *time.Time) string {
 	return t.Add(time.Hour * 8).Format(CSTLayout)
+}
+
+func formatRSSItemStars(s string) string {
+	str := ""
+	y := "♥"
+	n := "♡"
+	x := "⚇"
+
+	switch {
+	case strings.Contains(s, "很差"):
+		str = strings.Repeat(y, 1) + strings.Repeat(n, 4)
+	case strings.Contains(s, "较差"):
+		str = strings.Repeat(y, 2) + strings.Repeat(n, 3)
+	case strings.Contains(s, "还行"):
+		str = strings.Repeat(y, 3) + strings.Repeat(n, 2)
+	case strings.Contains(s, "推荐"):
+		str = strings.Repeat(y, 4) + strings.Repeat(n, 1)
+	case strings.Contains(s, "力荐"):
+		str = strings.Repeat(y, 5) + strings.Repeat(n, 0)
+	default:
+		str = strings.Repeat(x, 5)
+	}
+
+	return str
 }
