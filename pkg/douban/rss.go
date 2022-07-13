@@ -86,20 +86,21 @@ func formatRSSItemDate(t *time.Time) string {
 
 func formatRSSItemStars(s string) string {
 	str := ""
+	tag := "推荐: "
 	y := "♥"
 	n := "♡"
 	x := "⚇"
 
 	switch {
-	case strings.Contains(s, "很差"):
+	case strings.Contains(s, tag+"很差"):
 		str = strings.Repeat(y, 1) + strings.Repeat(n, 4)
-	case strings.Contains(s, "较差"):
+	case strings.Contains(s, tag+"较差"):
 		str = strings.Repeat(y, 2) + strings.Repeat(n, 3)
-	case strings.Contains(s, "还行"):
+	case strings.Contains(s, tag+"还行"):
 		str = strings.Repeat(y, 3) + strings.Repeat(n, 2)
-	case strings.Contains(s, "推荐"):
+	case strings.Contains(s, tag+"推荐"):
 		str = strings.Repeat(y, 4) + strings.Repeat(n, 1)
-	case strings.Contains(s, "力荐"):
+	case strings.Contains(s, tag+"力荐"):
 		str = strings.Repeat(y, 5) + strings.Repeat(n, 0)
 	default:
 		str = strings.Repeat(x, 5)
