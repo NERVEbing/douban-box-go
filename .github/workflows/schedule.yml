@@ -15,7 +15,7 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GIST_ID: ${{ secrets.GIST_ID }}
       DOUBAN_USER: ${{ secrets.DOUBAN_USER }}
-      TIMEZONE: ${{ secrets.TIMEZONE }}
+      TIMEZONE: 'Asia/Shanghai'
 
     steps:
       - name: Set up Go 1.x
