@@ -44,6 +44,8 @@ $ go run cmd/main.go
 - 在项目的 `Settings -> Secrets -> Actions` 中创建三个变量 `GH_TOKEN` 、 `GIST_ID` 和 `DOUBAN_USER`，分别为 GitHub Token 、 Gist ID 和 豆瓣
   ID
 
+- 时区变量 `TIMEZONE` 默认 `Aisa/Shanghai`，可根据实际情况调整
+
 - 第一次需手动执行，之后每次 `push` 或者每日 `00:15 (Asia/Shanghai)` 时会自动更新 Gist
 
 ## 开源协议

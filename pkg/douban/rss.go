@@ -23,7 +23,7 @@ const (
 	CSTLayout = "2006.01.02"
 )
 
-func getRSSDouBan(dbUserID string) (*rssDouBan, error) {
+func getRSSDouBan(dbUserID string, timezone string) (*rssDouBan, error) {
 	gist := &rssDouBan{}
 
 	fp := gofeed.NewParser()
@@ -37,7 +37,7 @@ func getRSSDouBan(dbUserID string) (*rssDouBan, error) {
 	for _, item := range feed.Items {
 		gistItem := &rssDouBanItem{
 			Title:   formatRSSItemTitle(item.Title),
-			PubDate: formatRSSItemDate(item.PublishedParsed),
+			PubDate: formatRSSItemDate(item.PublishedParsed, timezone),
 			Stars:   formatRSSItemStars(item.Description),
 		}
 		gist.Items = append(gist.Items, gistItem)
@@ -80,8 +80,13 @@ func formatRSSItemTitle(s string) string {
 	return s
 }
 
-func formatRSSItemDate(t *time.Time) string {
-	return t.Add(time.Hour * 8).Format(CSTLayout)
+func formatRSSItemDate(t *time.Time, timezone string) string {
+	local, err := time.LoadLocation(timezone)
+	if err != nil {
+		local = t.Location()
+	}
+
+	return t.In(local).Format(CSTLayout)
 }
 
 func formatRSSItemStars(s string) string {

@@ -13,8 +13,9 @@ func main() {
 	ghToken := os.Getenv("GH_TOKEN")
 	gistID := os.Getenv("GIST_ID")
 	dbUser := os.Getenv("DOUBAN_USER")
+	timezone := os.Getenv("TIMEZONE")
 
-	gist, err := douban.NewGist(ghUsername, ghToken, dbUser)
+	gist, err := douban.NewGist(ghUsername, ghToken, dbUser, timezone)
 	if err != nil {
 		panic(err)
 	}

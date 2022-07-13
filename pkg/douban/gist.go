@@ -18,7 +18,7 @@ type gist struct {
 	rssDouBan *rssDouBan
 }
 
-func NewGist(ghUsername string, ghToken string, dbUser string) (*gist, error) {
+func NewGist(ghUsername string, ghToken string, dbUser string, timezone string) (*gist, error) {
 	gist := &gist{}
 
 	ghTransport := github.BasicAuthTransport{
@@ -27,7 +27,7 @@ func NewGist(ghUsername string, ghToken string, dbUser string) (*gist, error) {
 	}
 
 	gist.github = github.NewClient(ghTransport.Client())
-	rssDouBan, err := getRSSDouBan(dbUser)
+	rssDouBan, err := getRSSDouBan(dbUser, timezone)
 	if err != nil {
 		return nil, err
 	}
