@@ -13,13 +13,13 @@ const (
 	MaxLineWidth = 40
 )
 
-type gist struct {
+type Gist struct {
 	github    *github.Client
 	rssDouBan *rssDouBan
 }
 
-func NewGist(ghUsername string, ghToken string, dbUser string, timezone string) (*gist, error) {
-	gist := &gist{}
+func NewGist(ghUsername string, ghToken string, dbUser string, timezone string) (*Gist, error) {
+	gist := &Gist{}
 
 	ghTransport := github.BasicAuthTransport{
 		Username: strings.TrimSpace(ghUsername),
@@ -36,7 +36,7 @@ func NewGist(ghUsername string, ghToken string, dbUser string, timezone string) 
 	return gist, nil
 }
 
-func (g *gist) BuildGitHubGist(ctx context.Context, gistID string) error {
+func (g *Gist) BuildGitHubGist(ctx context.Context, gistID string) error {
 	ghGist, err := g.getGitHubGist(ctx, gistID)
 	if err != nil {
 		return err
@@ -53,7 +53,7 @@ func (g *gist) BuildGitHubGist(ctx context.Context, gistID string) error {
 	return nil
 }
 
-func (g *gist) getGitHubGist(ctx context.Context, id string) (*github.Gist, error) {
+func (g *Gist) getGitHubGist(ctx context.Context, id string) (*github.Gist, error) {
 	ghGist, _, err := g.github.Gists.Get(ctx, id)
 	if err != nil {
 		return nil, err
@@ -62,7 +62,7 @@ func (g *gist) getGitHubGist(ctx context.Context, id string) (*github.Gist, erro
 	return ghGist, nil
 }
 
-func (g *gist) updateGitHubGist(ctx context.Context, id string, ghGist *github.Gist) error {
+func (g *Gist) updateGitHubGist(ctx context.Context, id string, ghGist *github.Gist) error {
 	_, _, err := g.github.Gists.Edit(ctx, id, ghGist)
 	if err != nil {
 		return err
@@ -71,15 +71,15 @@ func (g *gist) updateGitHubGist(ctx context.Context, id string, ghGist *github.G
 	return nil
 }
 
-func (g *gist) getGitHubGistFilename() string {
+func (g *Gist) getGitHubGistFilename() string {
 	return g.rssDouBan.Title
 }
 
-func (g *gist) getGitHubGistFile(ghGist *github.Gist) github.GistFile {
+func (g *Gist) getGitHubGistFile(ghGist *github.Gist) github.GistFile {
 	return ghGist.Files[github.GistFilename(g.getGitHubGistFilename())]
 }
 
-func (g *gist) formatRSSDouBanToGitHubGistContent() string {
+func (g *Gist) formatRSSDouBanToGitHubGistContent() string {
 	content := ""
 
 	for _, item := range g.rssDouBan.Items {
